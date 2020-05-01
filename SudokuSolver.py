@@ -12,6 +12,7 @@ grid = [[5,3,0,0,7,0,0,0,0],
 
 
 def solve(): 
+    global grid
     emp = empty()
     if not emp:
         return True
@@ -21,33 +22,37 @@ def solve():
         if possible(row, col, x):
             grid[row][col] = x
             if solve():
-                return True	        
-    grid[row][col] = 0
+                return True	  
+            grid[row][col] = 0      
     return False
 
 def possible(x,y,n):
+    global grid
     for i in range(0,9):
-        if grid[x][i] == n and y!=i: 
+        if grid[x][i] == n: 
             return False
-        if grid[i][y] == n and x!=i:
+    for i in range(0,9):
+        if grid[i][y] == n:
             return False
-    x0=((x+1)//3)*3
-    y0=((y+1)//3)*3
-    for i in range(y0-3,y0):
-        for j in range(x0-3,x0):
-            if grid[i][j] == n and y!=i and x!=j:
+    x0=((x)//3)*3
+    y0=((y)//3)*3
+    for i in range(0,3):
+        for j in range(0,3):
+            if grid[x0+i][y0+j] == n:
                 return False
     return True
  
     
 def printer():
+    global grid
     print(np.matrix(grid))
 
 def empty():
+    global grid
     for x in range(9):
         for y in range(9):
             if grid[x][y] == 0:
-                return(x,y)
+                return x,y
   
 
 printer()
